@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # http://editorconfig.org
 
 # top-most EditorConfig file
@@ -13,3 +14,20 @@ trim_trailing_whitespace = true
 [*.php]
 charset = utf-8
 indent_style = tab
+=======
+# http://editorconfig.org
+
+# top-most EditorConfig file
+root = true
+
+# Unix-style newlines with a newline ending every file, no whitespace
+[*]
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# PHP style
+[*.php]
+charset = utf-8
+indent_style = tab
+>>>>>>> 0b8fe957109a38cfc0b14fcd797ead35734b1802
