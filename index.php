@@ -24,7 +24,7 @@ $app->get('/load', function (Request $request) use ($app) {
 	if (empty($data)) {
 		return 'Invalid signed_payload.';
 	}
-	$redis = new Credis_Client('mybigcommerceapp.herokuapp.com');
+	$redis = new Credis_Client('localhost');
 	$key = getUserKey($data['store_hash'], $data['user']['email']);
 	$user = json_decode($redis->get($key), true);
 	if (empty($user)) {
@@ -34,7 +34,8 @@ $app->get('/load', function (Request $request) use ($app) {
 });
 
 $app->get('/auth/callback', function (Request $request) use ($app) {
-	$redis = new Credis_Client('mybigcommerceapp.herokuapp.com');
+	$redis = new Credis_Client('localhost');
+
 	$payload = array(
 		'client_id' => clientId(),
 		'client_secret' => clientSecret(),
@@ -44,15 +45,12 @@ $app->get('/auth/callback', function (Request $request) use ($app) {
 		'scope' => $request->get('scope'),
 		'context' => $request->get('context'),
 	);
+
 	$client = new Client(bcAuthService());
 	$req = $client->post('/oauth2/token', array(), $payload, array(
 		'exceptions' => false,
 	));
 	$resp = $req->send();
-	echo "<pre>";
-	print_r($resp); 
-	echo "</pre>";
-	die;
 
 	if ($resp->getStatusCode() == 200) {
 		$data = $resp->json();
@@ -104,7 +102,7 @@ $app->get('/storefront/{storeHash}/customers/{jwtToken}/recently_purchased.html'
  */
 function getRecentlyPurchasedProductsHtml($storeHash, $customerId)
 {
-	$redis = new Credis_Client('mybigcommerceapp.herokuapp.com');
+	$redis = new Credis_Client('localhost');
 	$cacheKey = "stores/{$storeHash}/customers/{$customerId}/recently_purchased_products.html";
 	$cacheLifetime = 60 * 5; // Set a 5 minute cache lifetime for this HTML block.
 
@@ -170,7 +168,7 @@ function configureBCApi($storeHash)
  */
 function getAuthToken($storeHash)
 {
-	$redis = new Credis_Client('mybigcommerceapp.herokuapp.com');
+	$redis = new Credis_Client('localhost');
 	$authData = json_decode($redis->get("stores/{$storeHash}/auth"));
 	return $authData->access_token;
 }
