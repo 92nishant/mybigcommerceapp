@@ -2,6 +2,13 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
+function prd($array){
+	echo "<pre>";
+	print_r($array);
+	echo "</pre>";
+	die;
+}
+
 use Bigcommerce\Api\Client as Bigcommerce;
 use Firebase\JWT\JWT;
 use Guzzle\Http\Client;
@@ -35,6 +42,7 @@ $app->get('/load', function (Request $request) use ($app) {
 
 $app->get('/auth/callback', function (Request $request) use ($app) {
 	$redis = new Credis_Client('localhost');
+
 
 	$payload = array(
 		'client_id' => clientId(),
