@@ -1,1 +1,1 @@
-web: php -S https://mybigcommerceapp.herokuapp.com/:$PORT
+web: php -S http://localhost/:$PORT
